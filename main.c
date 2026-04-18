@@ -3,11 +3,20 @@
 int main(int ac, char ** av)
 {
 	int i = 0;
-
+	int j = 0;
+	char **string_array;
+	
+	string_array = string_to_array("hello my main");
+	while (string_array[j] != NULL)
+	{
+		printf("usually %s\n", string_array[j]);
+		j++;
+	}
 	while (av[i] != NULL)
 	{
 		printf("parameter at index %d is %s\n", i, av[i]);
 		i++;
 	}
+
 	return (0);
 }
