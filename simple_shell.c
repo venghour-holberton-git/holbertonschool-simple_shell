@@ -58,3 +58,79 @@ char *_getenv(const char *name)
 
     return (NULL);
 }
+void print_path_directories(void)
+{
+    int i;
+    char *path;
+    char *token;
+
+    for (i = 0; environ[i] != NULL; i++)
+    {
+        if (strncmp(environ[i], "PATH=", 5) == 0)
+        {
+            path = environ[i] + 5;
+
+            token = strtok(path, ":");
+
+            while (token != NULL)
+            {
+                printf("%s\n", token);
+                token = strtok(NULL, ":");
+            }
+            return;
+        }
+    }
+}
+list_t *build_path_list(void)
+{
+    int i;
+    char *path;
+    char *token;
+    list_t *head = NULL;
+    list_t *new_node;
+    list_t *tmp;
+
+    for (i = 0; environ[i] != NULL; i++)
+    {
+        if (strncmp(environ[i], "PATH=", 5) == 0)
+        {
+            path = strdup(environ[i] + 5);
+            if (path == NULL)
+                return (NULL);
+
+            token = strtok(path, ":");
+
+            while (token != NULL)
+            {
+                new_node = malloc(sizeof(list_t));
+                if (new_node == NULL)
+                {
+                    free(path);
+                    return (NULL);
+                }
+
+                new_node->dir = strdup(token);
+                new_node->next = NULL;
+
+                if (head == NULL)
+                {
+                    head = new_node;
+                }
+                else
+                {
+                    tmp = head;
+                    while (tmp->next != NULL)
+                        tmp = tmp->next;
+                    tmp->next = new_node;
+                }
+
+                token = strtok(NULL, ":");
+            }
+
+            free(path);
+            return (head);
+        }
+    }
+
+    return (NULL);
+}
