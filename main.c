@@ -22,6 +22,7 @@ int main(int ac, char ** av)
 		printf("parameter at index %d is %s\n", i, av[i]);
 		i++;
 	}
+	print_path_directories();
 
 	return (0);
 }
