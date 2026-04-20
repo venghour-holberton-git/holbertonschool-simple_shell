@@ -6,3 +6,4 @@
 #include <sys/wait.h>
 
 char **string_to_array(char *s);
+char *_getenv(const char *name);
