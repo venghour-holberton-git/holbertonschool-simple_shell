@@ -30,7 +30,7 @@ int main(void)
 
 			if (w == -1)
 				perror("waitpid");
-		/** if (WIFSIGNALED(status))
+		/* if (WIFSIGNALED(status))
 		*	printf("killed by signaled");
 		* if (WIFSTOPPED(status))
 		*	printf("child stopped");
