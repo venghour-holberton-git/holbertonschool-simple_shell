@@ -10,35 +10,38 @@ int main(int ac, char **av, char **env)
 	char **command_inputs;
 	char *argv[100];
 	char full_path[1024];
+	int found;
 
 	printf("$ ");
 	while ((nread = getline(&line, &size, stdin)) != -1)
 	{
+		char *path = strdup(getenv("PATH"));
+		char *dir;
 		printf("%s", line);
-		pid = fork();
 		index = 0;
-		
+		found = 0;
+
+		line[strcspn(line, "\n")] = '\0';
+		command_inputs = string_to_array(line);
+		dir = strtok(path, ":");
+
+		while(dir != NULL)
+		{
+			sprintf(full_path, "%s/%s", dir, command_inputs[0]);
+			if (access(full_path, X_OK) == 0)
+			{
+				found = 1;
+				argv[0] = full_path;
+				index++;
+				break;
+			}
+		dir = strtok(NULL, ":");
+		}
+		if (found == 0)
+			continue;
+		pid = fork();
 		if (pid == 0)
 		{
-			char *path = strdup(getenv("PATH"));
-			char *dir;
-
-			line[strcspn(line, "\n")] = '\0';
-			command_inputs = string_to_array(line);
-			dir = strtok(path, ":");
-
-			while(dir != NULL)
-			{
-				sprintf(full_path, "%s/%s", dir, command_inputs[0]);
-				if (access(full_path, X_OK) == 0)
-				{
-					argv[0] = full_path;
-					index++;
-					break;
-				}
-				dir = strtok(NULL, ":");
-			}
-
 			while (command_inputs[index] != NULL)
 			{
 				argv[index] = command_inputs[index];
