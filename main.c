@@ -1,29 +1,35 @@
 #include "simple_shell.h"
 
-int main(int ac, char **av)
+int main(int ac, char **av, char **env)
 {
-	int i = 0;
-	int j = 0;
-	char **string_array;
-	char *path;
+	char *line = NULL;
+	size_t size = 0;
+	ssize_t nread;
+	pid_t pid;
+	int w_status;
 
-	path = _getenv("PATH");
-
-   	if (path != NULL)
-        printf("PATH = %s\n", path);
-
-	string_array = string_to_array("hello my main");
-	while (string_array[j] != NULL)
+	printf("$ ");
+	while ((nread = getline(&line, &size, stdin)) != -1)
 	{
-		printf("usually %s\n", string_array[j]);
-		j++;
-	}
-	while (av[i] != NULL)
-	{
-		printf("parameter at index %d is %s\n", i, av[i]);
-		i++;
-	}
-	print_path_directories();
+		printf("%s", line);
+		pid = fork();
+		
+		if (pid == 0)
+		{
+			line[strcspn(line, "\n")] = '\0';
+			char *argv[] = {line, NULL};
 
+			if (execve(line, argv, NULL) == -1)
+            		{
+                		perror("Error");
+               			 exit(1);
+            		}
+		}
+		else
+		{
+			waitpid(pid, &w_status, WUNTRACED | WCONTINUED);
+			printf("$ ");
+		}
+	}
 	return (0);
 }
