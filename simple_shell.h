@@ -20,3 +20,4 @@ char **string_to_array(char *s);
 char *_getenv(const char *name);
 void print_path_directories(void);
 list_t *build_path_list(void);
+int user_exit(char **args, char *line);
