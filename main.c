@@ -1,6 +1,6 @@
 #include "simple_shell.h"
 
-int main(int ac, char **av, char **env)
+int main(void)
 {
 	char *line = NULL;
 	size_t size = 0;
