@@ -7,7 +7,7 @@ int main(void)
 	ssize_t nread;
 	
 	printf("$ ");
-	while((nread = getline(&line, &size, stdin)) != -1)
+	while ((nread = getline(&line, &size, stdin)) != -1)
 	{
 		printf("%s", line);
 		printf("$ ");
