@@ -25,15 +25,15 @@ int main(void)
 		}
 		if (m_pid > 0)
 		{
-			//kill(m_pid, SIGKILL);
+			/* kill(m_pid, SIGKILL); */
 			w = waitpid(m_pid, &status, WUNTRACED | WCONTINUED);
-		
+
 			if (w == -1)
 				perror("waitpid");
 		/** if (WIFSIGNALED(status))
-			printf("killed by signaled");
-		if (WIFSTOPPED(status))
-			printf("child stopped");
+		*	printf("killed by signaled");
+		* if (WIFSTOPPED(status))
+		*	printf("child stopped");
 		*/
 			printf("this is a parent\n");
 		}
