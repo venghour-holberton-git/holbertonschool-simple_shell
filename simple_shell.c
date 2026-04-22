@@ -134,3 +134,31 @@ list_t *build_path_list(void)
 
     return (NULL);
 }
+
+/**
+ * user_exit - Checks if a command is "exit" and handles termination.
+ * @args: Array of tokens (the command and its arguments).
+ * @line: The raw input buffer from getline to be freed.
+ * Return: 0 if the command is not exit, otherwise it exits the shell.
+ */
+
+int user_exit(char **args, char *line)
+{
+	/* Check if the first argument exists and is "exit" */
+	if (args && args[0] != NULL)
+	{
+		if (_strcmp(args[0], "exit") == 0)
+		{
+			/* Free up resources */
+			free_tokens(args);
+			free(line);
+
+			/* Exit the process */
+			exit(EXIT_SUCCESS);
+		}
+	}
+
+	/* Returns 0 to indicate we didn't exit and should continue */
+	return (0);
+}
+
