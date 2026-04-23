@@ -9,7 +9,7 @@ int main(void)
 	int w_status, index = 0;
 	char **command_inputs;
 	char *argv[100];
-	char full_path[1024];
+	char *full_path;
 	int found;
 	int interactive = isatty(STDIN_FILENO);
 
@@ -45,30 +45,7 @@ int main(void)
     	exit(EXIT_SUCCESS);
 		}
 
-		if (strchr(command_inputs[0], '/') != NULL)
-		{
-    			if (access(command_inputs[0], X_OK) == 0)
-    			{
-				strcpy(full_path, command_inputs[0]);
-        			argv[0] = command_inputs[0];
-        			found = 1;
-   		 	}
-		}
-		else
-		{
-			while(dir != NULL)
-			{
-				sprintf(full_path, "%s/%s", dir, command_inputs[0]);
-				if (access(full_path, X_OK) == 0)
-				{
-					found = 1;
-					argv[0] = full_path;
-					index++;
-					break;
-				}
-				dir = strtok(NULL, ":");
-			}
-		}	
+		full_path = get_available_path(line, &found);
 		if (found == 0)
 		{
 			free(command_inputs);

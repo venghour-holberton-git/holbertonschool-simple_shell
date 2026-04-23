@@ -173,36 +173,51 @@ void print_env(void)
 		printf("%s\n", environ[i]);
 	}
 }
-/**
- * char ** check_available_path(char **command_input)
+char *search_for_path(char *short_path, int *is_founded)
 {
-	int found = 0;
-	if (strchr(command_inputs[0], '/') != NULL)
+	char *full_path = NULL;
+	int index = 0;
+	char *dir;
+	char *path = strdup(_getenv("PATH"));
+
+	full_path = malloc(1024);
+	dir = strtok(path, ":");
+	while(dir != NULL)
+	{
+		sprintf(full_path, "%s/%s", dir, short_path);
+		if (access(full_path, X_OK) == 0)
+		{
+			*is_founded = 1;
+			return (full_path);
+		}
+		index++;
+	}
+	return (full_path);
+}
+char *get_available_path(char *user_command, int *is_founded)
+{
+	char *first_input;
+	char **command_array;
+
+	*is_founded = 0;
+	user_command[strcspn(user_command, "\n")] = '\0';
+	command_array = string_to_array(user_command);
+	first_input = strdup(command_array[0]);
+	free(command_array);
+	if (strchr(first_input, '/') != NULL)
         {
-		if (access(command_inputs[0], X_OK) == 0)
+		if (access(first_input, X_OK) == 0)
                 {
-			strcpy(full_path, command_inputs[0]);
-                        argv[0] = command_inputs[0];
-                        found = 1;
+                        *is_founded = 1;
+			return (first_input);
                 }
 	}
         else
         {
-        	while(dir != NULL)
-        	{
-        		sprintf(full_path, "%s/%s", dir, command_inputs[0]);
-                	if (access(full_path, X_OK) == 0)
-                	{
-                		found = 1;
-                        	argv[0] = full_path;
-                        	index++;
-                        	break;
-                	}
-                	dir = strtok(NULL, ":");
-         	}
-         }
-	return (found);
+		return (search_for_path(first_input, is_founded));
+        }
 }
+/**
 int exec_command(char **command_input, char *path)
 {
 	char *directory;
