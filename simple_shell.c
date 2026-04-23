@@ -1,4 +1,16 @@
-#include "simple_shell.h"
+/**
+ * print_env - prints the environment variables
+ * Return: void
+ */
+void print_env(void)
+{
+	int i;
+
+	for (i = 0; environ[i] != NULL; i++)
+	{
+		printf("%s\n", environ[i]);
+	}
+}#include "simple_shell.h"
 #include <stddef.h>
 
 char **string_to_array(char *s)
@@ -157,5 +169,19 @@ list_t *build_path_list(void)
 
 	return (0);
 }
-*/
 
+
+*/
+/**
+ * print_env - prints the environment variables
+ * Return: void
+ */
+void print_env(void)
+{
+	int i;
+
+	for (i = 0; environ[i] != NULL; i++)
+	{
+		printf("%s\n", environ[i]);
+	}
+}
