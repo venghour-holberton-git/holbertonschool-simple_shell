@@ -15,7 +15,7 @@ int main(void)
 	printf("$ ");
 	while ((nread = getline(&line, &size, stdin)) != -1)
 	{
-		char *path = strdup(getenv("PATH"));
+		char *path = strdup(_getenv("PATH"));
 		char *dir;
 
 		index = 0;
