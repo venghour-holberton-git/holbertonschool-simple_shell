@@ -49,7 +49,11 @@ int main(void)
 			}
 		}	
 		if (found == 0)
+		{
+			free(command_inputs);
+			free(path);
 			continue;
+		}
 		pid = fork();
 		if (pid == 0)
 		{
@@ -63,12 +67,16 @@ int main(void)
 			if (execve(argv[0], argv, NULL) == -1)
             		{
                 		perror("Error");
+				free(command_inputs);
+				free(path);
                			 exit(1);
             		}
 		}
 		else
 		{
 			waitpid(pid, &w_status, WUNTRACED | WCONTINUED);
+			free(command_inputs);
+			free(path);
 			if (isatty(STDIN_FILENO))
     				printf("$ ");
 		}
