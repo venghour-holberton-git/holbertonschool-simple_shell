@@ -69,7 +69,8 @@ int main(void)
 		else
 		{
 			waitpid(pid, &w_status, WUNTRACED | WCONTINUED);
-			printf("$ ");
+			if (isatty(STDIN_FILENO))
+    				printf("$ ");
 		}
 	}
 	return (0);
