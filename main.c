@@ -21,6 +21,7 @@ int main(void)
 		index = 0;
 		found = 0;
 
+		printf("$ ");
 		line[strcspn(line, "\n")] = '\0';
 		command_inputs = string_to_array(line);
 		dir = strtok(path, ":");
@@ -77,8 +78,6 @@ int main(void)
 			waitpid(pid, &w_status, WUNTRACED | WCONTINUED);
 			free(command_inputs);
 			free(path);
-			if (isatty(STDIN_FILENO))
-    				printf("$ ");
 		}
 	}
 	return (0);
