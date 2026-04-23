@@ -18,7 +18,6 @@ int main(void)
 		char *path = strdup(getenv("PATH"));
 		char *dir;
 
-		//printf("%s", line);
 		index = 0;
 		found = 0;
 
