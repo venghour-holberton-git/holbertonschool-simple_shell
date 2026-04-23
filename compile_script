@@ -1,2 +1,0 @@
-#!/bin/bash
-gcc simple_shell.c main.c
