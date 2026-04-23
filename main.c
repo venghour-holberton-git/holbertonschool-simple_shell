@@ -34,6 +34,17 @@ int main(void)
 		line[strcspn(line, "\n")] = '\0';
 		command_inputs = string_to_array(line);
 		dir = strtok(path, ":");
+
+		if (strcmp(command_inputs[0], "exit") == 0)
+		{
+    	/* Clean up: free allocated memory for arguments and input buffer /
+    	free_args(args); 
+    	free(input_line);
+
+    	/ Terminate the program with status 0 (success) */
+    	exit(EXIT_SUCCESS);
+		}
+
 		if (strchr(command_inputs[0], '/') != NULL)
 		{
     			if (access(command_inputs[0], X_OK) == 0)
