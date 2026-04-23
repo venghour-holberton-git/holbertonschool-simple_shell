@@ -4,11 +4,12 @@
 char **string_to_array(char *s)
 {
 	int word_count = 0;
-	char *word_array[1024];
+	char **word_array;
 	char *str, *token;
 
 	if (s == NULL)
 		return (NULL);
+	word_array = malloc(sizeof(char *) * 1024);
 	for (word_count = 0, str = strdup(s); ; str = NULL, word_count++)
 	{
 		token = strtok(str, " ");
