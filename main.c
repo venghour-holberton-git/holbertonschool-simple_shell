@@ -55,20 +55,8 @@ int main(void)
 		pid = fork();
 		if (pid == 0)
 		{
-			while (command_inputs[index] != NULL)
-			{
-				argv[index] = command_inputs[index];
-				index++;
-			}
-			argv[index] = NULL;
-
-			if (execve(argv[0], argv, NULL) == -1)
-            		{
-                		perror("Error");
-				free(command_inputs);
-				free(path);
-               			 exit(1);
-            		}
+			exec_child_command(&command_inputs, argv);
+			return (0);
 		}
 		else
 		{

@@ -34,5 +34,6 @@ list_t *build_path_list(void);
 int user_exit(char **args, char *line);
 char *search_for_path(char *short_path, int *is_founded);
 char *get_available_path(char *user_command, int *is_founded);
+int exec_child_command(char ***command_inputs, char **argv);
 
 #endif

@@ -217,9 +217,19 @@ char *get_available_path(char *user_command, int *is_founded)
 		return (search_for_path(first_input, is_founded));
         }
 }
-/**
-int exec_command(char **command_input, char *path)
+int exec_child_command(char ***command_inputs, char **argv)
 {
-	char *directory;
+	int index = 0;
+	while (*command_inputs[index] != NULL)
+        {
+		argv[index] = *command_inputs[index];
+                index++;
+	}
+	argv[index] = NULL;
+	if (execve(argv[0], argv, NULL) == -1)
+	{
+		perror("Error");
+		free(*command_inputs);
+		return (1);
+	}
 }
-*/
