@@ -1,3 +1,6 @@
+#ifndef SIMPLE_SHELL_H
+#define SIMPLE_SHELL_H
+
 #include <unistd.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -29,3 +32,5 @@ char *_getenv(const char *name);
 void print_path_directories(void);
 list_t *build_path_list(void);
 int user_exit(char **args, char *line);
+
+#endif

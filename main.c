@@ -13,6 +13,7 @@ int main(void)
 	int found;
 	int interactive = isatty(STDIN_FILENO);
 
+	printf("$ ");
 	while ((nread = getline(&line, &size, stdin)) != -1)
 	{
 		char *path = strdup(_getenv("PATH"));
@@ -23,8 +24,12 @@ int main(void)
 		
 		if (interactive)
 		{
-			printf("$ ");
-			fflush(stdout);
+			if (strcmp(line, "env\n") == 0)
+			{
+				print_env();
+				printf("$ ");
+				continue;
+			}
 		}
 		line[strcspn(line, "\n")] = '\0';
 		command_inputs = string_to_array(line);
@@ -82,40 +87,9 @@ int main(void)
 			waitpid(pid, &w_status, WUNTRACED | WCONTINUED);
 			free(command_inputs);
 			free(path);
+			printf("$ ");
+                        fflush(stdout);
 		}
 	}
-	return (0);
-}
-
-#include "simple_shell.h"
-
-int main(void)
-{
-	char *line = NULL;
-	size_t size = 0;
-	ssize_t nread;
-	char **command_inputs;
-
-	if (isatty(STDIN_FILENO))
-		printf("$ ");
-
-	while ((nread = getline(&line, &size, stdin)) != -1)
-	{
-		line[strcspn(line, "\n")] = '\0';
-		command_inputs = string_to_array(line);
-
-		if (command_inputs && command_inputs[0] != NULL)
-		{
-			if (strcmp(command_inputs[0], "env") == 0)
-			{
-				print_env();
-				if (isatty(STDIN_FILENO))
-					printf("$ ");
-				continue;
-			}
-		}
-
-	}
-	free(line);
 	return (0);
 }

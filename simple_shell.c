@@ -1,16 +1,4 @@
-/**
- * print_env - prints the environment variables
- * Return: void
- */
-void print_env(void)
-{
-	int i;
-
-	for (i = 0; environ[i] != NULL; i++)
-	{
-		printf("%s\n", environ[i]);
-	}
-}#include "simple_shell.h"
+#include "simple_shell.h"
 #include <stddef.h>
 
 char **string_to_array(char *s)
@@ -172,7 +160,6 @@ list_t *build_path_list(void)
 
 
 */
-<<<<<<< Updated upstream
 /**
  * print_env - prints the environment variables
  * Return: void
@@ -185,8 +172,9 @@ void print_env(void)
 	{
 		printf("%s\n", environ[i]);
 	}
-=======
-char ** check_available_path(char **command_input)
+}
+/**
+ * char ** check_available_path(char **command_input)
 {
 	int found = 0;
 	if (strchr(command_inputs[0], '/') != NULL)
@@ -218,5 +206,5 @@ char ** check_available_path(char **command_input)
 int exec_command(char **command_input, char *path)
 {
 	char *directory;
->>>>>>> Stashed changes
 }
+*/
