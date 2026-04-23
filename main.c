@@ -24,19 +24,30 @@ int main(void)
 		line[strcspn(line, "\n")] = '\0';
 		command_inputs = string_to_array(line);
 		dir = strtok(path, ":");
-
-		while(dir != NULL)
+		if (strchr(command_inputs[0], '/') != NULL)
 		{
-			sprintf(full_path, "%s/%s", dir, command_inputs[0]);
-			if (access(full_path, X_OK) == 0)
-			{
-				found = 1;
-				argv[0] = full_path;
-				index++;
-				break;
-			}
-		dir = strtok(NULL, ":");
+    			if (access(command_inputs[0], X_OK) == 0)
+    			{
+				strcpy(full_path, command_inputs[0]);
+        			argv[0] = command_inputs[0];
+        			found = 1;
+   		 	}
 		}
+		else
+		{
+			while(dir != NULL)
+			{
+				sprintf(full_path, "%s/%s", dir, command_inputs[0]);
+				if (access(full_path, X_OK) == 0)
+				{
+					found = 1;
+					argv[0] = full_path;
+					index++;
+					break;
+				}
+				dir = strtok(NULL, ":");
+			}
+		}	
 		if (found == 0)
 			continue;
 		pid = fork();
