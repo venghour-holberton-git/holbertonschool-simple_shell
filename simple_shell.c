@@ -172,6 +172,7 @@ list_t *build_path_list(void)
 
 
 */
+<<<<<<< Updated upstream
 /**
  * print_env - prints the environment variables
  * Return: void
@@ -184,4 +185,38 @@ void print_env(void)
 	{
 		printf("%s\n", environ[i]);
 	}
+=======
+char ** check_available_path(char **command_input)
+{
+	int found = 0;
+	if (strchr(command_inputs[0], '/') != NULL)
+        {
+		if (access(command_inputs[0], X_OK) == 0)
+                {
+			strcpy(full_path, command_inputs[0]);
+                        argv[0] = command_inputs[0];
+                        found = 1;
+                }
+	}
+        else
+        {
+        	while(dir != NULL)
+        	{
+        		sprintf(full_path, "%s/%s", dir, command_inputs[0]);
+                	if (access(full_path, X_OK) == 0)
+                	{
+                		found = 1;
+                        	argv[0] = full_path;
+                        	index++;
+                        	break;
+                	}
+                	dir = strtok(NULL, ":");
+         	}
+         }
+	return (found);
+}
+int exec_command(char **command_input, char *path)
+{
+	char *directory;
+>>>>>>> Stashed changes
 }
