@@ -11,8 +11,8 @@ int main(void)
 	char *argv[100];
 	char full_path[1024];
 	int found;
+	int interactive = isatty(STDIN_FILENO);
 
-	printf("$ ");
 	while ((nread = getline(&line, &size, stdin)) != -1)
 	{
 		char *path = strdup(_getenv("PATH"));
@@ -20,8 +20,12 @@ int main(void)
 
 		index = 0;
 		found = 0;
-
-		printf("$ ");
+		
+		if (interactive)
+		{
+			printf("$ ");
+			fflush(stdout);
+		}
 		line[strcspn(line, "\n")] = '\0';
 		command_inputs = string_to_array(line);
 		dir = strtok(path, ":");
