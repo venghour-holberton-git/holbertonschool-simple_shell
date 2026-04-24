@@ -1,5 +1,10 @@
 #include "simple_shell.h"
 
+/**
+ * main - entry point of the program
+ * Return: 0
+ */
+
 int main(void)
 {
 	char *line = NULL;
