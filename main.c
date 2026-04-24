@@ -12,7 +12,6 @@ int main(void)
 	ssize_t nread;
 	pid_t pid;
 	int w_status, index = 0;
-	char **command_inputs;
 	char *argv[100];
 	int found = 0;
 	int interactive = isatty(STDIN_FILENO);
@@ -36,20 +35,18 @@ int main(void)
 		printf("founded is %d\n", found);
 		if (found == 0)
 		{
-			free(command_inputs);
 			continue;
 		}
 		pid = fork();
 		if (pid == 0)
 		{
 			printf("testing");
-			exec_child_command(&command_inputs, argv);
+			exec_child_command(line);
 			return (0);
 		}
 		else
 		{
 			waitpid(pid, &w_status, WUNTRACED | WCONTINUED);
-			free(command_inputs);
 			printf("$ ");
 			fflush(stdout);
 		}
