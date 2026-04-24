@@ -15,7 +15,8 @@ int main(void)
 
 	while (1)
 	{
-		printf("$ ");
+		if (isatty(STDIN_FILENO))
+			printf("$ ");
 		nread = getline(&line, &size, stdin);
 		if (nread == -1)
 			break;
