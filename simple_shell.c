@@ -16,7 +16,7 @@ int user_exit(char **args, char *line)
 	{
 		if (_strcmp(args[0], "exit") == 0)
 		{
- 			free_tokens(args);
+			free_tokens(args);
 			free(line);
 			exit(EXIT_SUCCESS);
 		}
