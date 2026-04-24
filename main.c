@@ -18,7 +18,7 @@ int main(void)
 	while ((nread = getline(&line, &size, stdin)) != -1)
 	{
 		found = 0;
-		if (handle_print_env_and_exit() == 0)
+		if (handle_print_env_and_exit(line) == 0)
 			continue;
 		full_path = get_available_path(line, &found);
 		if (found == 0)
