@@ -7,29 +7,59 @@
 
 int main(void)
 {
-	char *line = NULL;
-	size_t size = 0;
-	ssize_t nread;
-	int found = 0;
-	char *full_path = NULL;
+    char *line = NULL;
+    size_t len = 0;
+    ssize_t read;
+    pid_t pid;
+    int status;
+    char *argv[2];
+    int i;
 
-	while (1)
-	{
-		if (isatty(STDIN_FILENO))
-			printf("$ ");
-		nread = getline(&line, &size, stdin);
-		if (nread == -1)
-			break;
-		found = 0;
-		if (handle_print_env_and_exit(line) == 0)
-			continue;
-		full_path = get_available_path(line, &found);
-		if (found == 0)
-		{
-			perror("Error");
-			continue;
-		}
-		handle_parent_child_action(line, full_path);
-	}
-	return (0);
+    while (1)
+    {
+        if (isatty(STDIN_FILENO))
+            printf("$ ");
+
+        read = getline(&line, &len, stdin);
+
+        if (read == -1)
+        {
+            if (isatty(STDIN_FILENO))
+                printf("\n");
+            break;
+        }
+
+        line[strcspn(line, "\n")] = '\0';
+
+        i = strlen(line) - 1;
+        while (i >= 0 && (line[i] == ' ' || line[i] == '\t'))
+        {
+            line[i] = '\0';
+            i--;
+        }
+
+        if (line[0] == '\0')
+            continue;
+
+        pid = fork();
+        if (pid == -1)
+            continue;
+
+        if (pid == 0)
+        {
+            argv[0] = line;
+            argv[1] = NULL;
+
+            execve(line, argv, environ);
+
+            exit(127);
+        }
+        else
+        {
+            wait(&status);
+        }
+    }
+
+    free(line);
+    return 0;
 }
