@@ -13,9 +13,12 @@ int main(void)
 	int found = 0;
 	char *full_path = NULL;
 
-	printf("$ ");
-	while ((nread = getline(&line, &size, stdin)) != -1)
+	while (1)
 	{
+		printf("$ ");
+		nread = getline(&line, &size, stdin);
+		if (nread == -1);
+			break;
 		found = 0;
 		if (handle_print_env_and_exit(line) == 0)
 			continue;
