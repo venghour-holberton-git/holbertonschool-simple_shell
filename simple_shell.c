@@ -127,7 +127,7 @@ char *get_available_path(char *user_command, int *is_founded)
  * Return: pointer to the newly created argv array, or NULL on failure
  */
 
-char ** get_argv_from_command(char *user_command, char *file_path)
+char **get_argv_from_command(char *user_command, char *file_path)
 {
 	int index = 0;
 	char **argv;
