@@ -58,7 +58,7 @@ void handle_parent_child_action(char *line, char *full_path)
 
 /**
  * handle_print_env_and_exit - handles "env" command in interactive mode
- *
+ * @line: user input
  * Description: This function checks if the shell is running in
  * interactive mode. If so, it compares the user input with the
  * "env" command. When matched, it prints the environment variables
