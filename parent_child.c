@@ -14,7 +14,7 @@
 
 int exec_child_command(char *user_command, char *file_path)
 {
-	char **argv;
+	char **argv, **command_inputs;
 	int i = 0;
 	
 	command_inputs = string_to_array(user_command);
@@ -24,6 +24,7 @@ int exec_child_command(char *user_command, char *file_path)
 		while (command_inputs[i] != NULL)
 		{
 			free(command_inputs[i]);
+			i++;
 		}
 		free(command_inputs);
 		free(argv);
