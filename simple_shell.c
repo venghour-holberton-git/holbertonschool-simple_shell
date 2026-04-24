@@ -1,6 +1,17 @@
 #include "simple_shell.h"
 #include <stddef.h>
 
+/**
+ * string_to_array - splits a string into an array of words
+ * @s: input string to be tokenized
+ *
+ * Description: This function takes a string and splits it into
+ * individual words using space as a delimiter. It uses strtok
+ * to tokenize the string and stores each token in an array.
+ *
+ * Return: pointer to an array of strings (tokens), or NULL if input is NULL
+ */
+
 char **string_to_array(char *s)
 {
 	int word_count = 0;
@@ -98,6 +109,21 @@ void print_env(void)
 		printf("%s\n", environ[i]);
 	}
 }
+
+/**
+ * search_for_path - searches for an executable in PATH directories
+ * @short_path: command name without path
+ * @is_founded: pointer to flag indicating if command is found
+ *
+ * Description: This function searches for the given command name
+ * in all directories listed in the PATH environment variable.
+ * It constructs a full path for each directory and checks if the
+ * file is executable using access(). If found, the full path is returned.
+ *
+ * Return: pointer to the full path of the executable. If not found,
+ * returns the last constructed path (flag remains 0)
+ */
+
 char *search_for_path(char *short_path, int *is_founded)
 {
 	char *full_path;
@@ -123,6 +149,21 @@ char *search_for_path(char *short_path, int *is_founded)
 	}
 	return (full_path);
 }
+
+/**
+ * get_available_path - resolves the executable path for a command
+ * @user_command: raw input command from the user
+ * @is_founded: pointer to flag indicating if command is found
+ *
+ * Description: This function extracts the command from the user input.
+ * If the command contains a '/' character, it is treated as a direct
+ * path and checked for executability. Otherwise, it searches for the
+ * command in the PATH environment variable using search_for_path().
+ *
+ * Return: pointer to the resolved executable path. If not found,
+ * returns a path with is_founded set to 0
+ */
+
 char *get_available_path(char *user_command, int *is_founded)
 {
 	char **command_array;
@@ -142,6 +183,19 @@ char *get_available_path(char *user_command, int *is_founded)
 	}
 	return (search_for_path(first_input, is_founded));
 }
+
+/**
+ * get_argv_from_command - builds argument vector for execve
+ * @user_command: raw command line input from the user
+ * @file_path: full path to the executable command
+ *
+ * Description: This function splits the user command into tokens and
+ * constructs an argv array suitable for execve. The first element
+ * of argv is replaced with the provided full path to the executable.
+ *
+ * Return: pointer to the newly created argv array, or NULL on failure
+ */
+
 char ** get_argv_from_command(char *user_command, char *file_path)
 {
 	int index = 0;
@@ -165,6 +219,19 @@ char ** get_argv_from_command(char *user_command, char *file_path)
 	argv[index] = NULL;
 	return (argv);
 }
+
+/**
+ * exec_child_command - executes a command in the child process
+ * @user_command: raw command line input from the user
+ * @file_path: full path to the executable command
+ *
+ * Description: This function prepares the argument vector using
+ * get_argv_from_command and executes the command using execve.
+ * If execve fails, an error message is printed.
+ *
+ * Return: 1 on failure, does not return on success
+ */
+
 int exec_child_command(char *user_command, char *file_path)
 {
 	int index = 0;
@@ -176,6 +243,19 @@ int exec_child_command(char *user_command, char *file_path)
 		return (1);
 	}
 }
+
+/**
+ * handle_parent_child_action - handles process creation and execution
+ * @line: raw command line input from the user
+ * @full_path: full path to the executable command
+ *
+ * Description: This function forks a new process. The child process
+ * executes the command, while the parent waits for the child process
+ * to finish and then prints a new prompt.
+ *
+ * Return: void
+ */
+
 void handle_parent_child_action(char *line, char *full_path)
 {
 	int w_status;
