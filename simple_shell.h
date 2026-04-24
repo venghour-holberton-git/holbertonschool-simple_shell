@@ -34,5 +34,6 @@ char *search_for_path(char *short_path, int *is_founded);
 char *get_available_path(char *user_command, int *is_founded);
 int exec_child_command(char *user_command, char *file_path);
 char ** get_argv_from_command(char *user_command, char *file_path);
+void do_parent_child(
 
 #endif
