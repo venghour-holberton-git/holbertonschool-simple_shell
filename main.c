@@ -16,7 +16,6 @@ int main(void)
 	printf("$ ");
 	while ((nread = getline(&line, &size, stdin)) != -1)
 	{
-
 		index = 0;
 		found = 0;
 		if (interactive)
@@ -28,7 +27,6 @@ int main(void)
 				continue;
 			}
 		}
-		printf("starteddddd\n");	
 		full_path = get_available_path(line, &found);
 		printf("founded is %d\n", found);
 		if (found == 0)
@@ -48,7 +46,7 @@ int main(void)
 			waitpid(pid, &w_status, WUNTRACED | WCONTINUED);
 			free(command_inputs);
 			printf("$ ");
-                        fflush(stdout);
+			fflush(stdout);
 		}
 	}
 	return (0);
