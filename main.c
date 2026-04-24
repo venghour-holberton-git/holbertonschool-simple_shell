@@ -1,4 +1,5 @@
 #include "simple_shell.h"
+#include "new_shell.h"
 
 /**
  * main - entry point of the program
@@ -7,59 +8,42 @@
 
 int main(void)
 {
-    char *line = NULL;
-    size_t len = 0;
-    ssize_t read;
-    pid_t pid;
-    int status;
-    char *argv[2];
-    int i;
+	char *line = NULL;
+	size_t size = 0;
+	ssize_t nread;
+	char *full_path;
+	pid_t cpid;
+	char *argv[100];
+	int wstatus;
 
-    while (1)
-    {
-        if (isatty(STDIN_FILENO))
-            printf("$ ");
-
-        read = getline(&line, &len, stdin);
-
-        if (read == -1)
-        {
-            if (isatty(STDIN_FILENO))
-                printf("\n");
-            break;
-        }
-
-        line[strcspn(line, "\n")] = '\0';
-
-        i = strlen(line) - 1;
-        while (i >= 0 && (line[i] == ' ' || line[i] == '\t'))
-        {
-            line[i] = '\0';
-            i--;
-        }
-
-        if (line[0] == '\0')
-            continue;
-
-        pid = fork();
-        if (pid == -1)
-            continue;
-
-        if (pid == 0)
-        {
-            argv[0] = line;
-            argv[1] = NULL;
-
-            execve(line, argv, environ);
-
-            exit(127);
-        }
-        else
-        {
-            wait(&status);
-        }
-    }
-
-    free(line);
-    return 0;
+	while (1)
+	{
+		if (isatty(STDIN_FILENO))
+			printf("$ ");
+		nread = getline(&line, &size, stdin);
+		if (nread == -1)
+			exit(1);
+		line[strcspn(line, "\n")] = '\0';
+		full_path = line;
+		if (access(full_path, X_OK) == 0)
+		{
+			cpid = fork();
+			if (cpid == 0)
+			{
+				argv[0] = full_path;
+				argv[1] = NULL;
+				if (execve(full_path, argv, environ) == -1)
+				{
+					perror("Error");
+					exit(1);
+				}
+			}
+			else
+			{
+				waitpid(cpid, &wstatus, WUNTRACED | WCONTINUED);
+			}
+		}
+		perror("Error");
+	}
+	return 0;
 }
