@@ -1,5 +1,10 @@
 #include "simple_shell.h"
 
+/**
+ * main - entry point of the program
+ * Return: 0
+ */
+
 int main(void)
 {
 	char *line = NULL;
@@ -7,21 +12,16 @@ int main(void)
 	ssize_t nread;
 	pid_t pid;
 	int w_status, index = 0;
-	char **command_inputs;
 	char *argv[100];
-	char *full_path;
-	int found;
+	int found = 0;
 	int interactive = isatty(STDIN_FILENO);
+	char *full_path = NULL;
 
 	printf("$ ");
 	while ((nread = getline(&line, &size, stdin)) != -1)
 	{
-		char *path = strdup(_getenv("PATH"));
-		char *dir;
-
 		index = 0;
 		found = 0;
-		
 		if (interactive)
 		{
 			if (strcmp(line, "env\n") == 0)
@@ -31,52 +31,26 @@ int main(void)
 				continue;
 			}
 		}
-		line[strcspn(line, "\n")] = '\0';
-		command_inputs = string_to_array(line);
-		dir = strtok(path, ":");
-
-		if (strcmp(command_inputs[0], "exit") == 0)
-		{
-    	/* Clean up: free allocated memory for arguments and input buffer /
-    	free_args(args); 
-    	free(input_line);
-
-    	/ Terminate the program with status 0 (success) */
-    	exit(EXIT_SUCCESS);
-		}
-
 		full_path = get_available_path(line, &found);
 		if (found == 0)
 		{
-			free(command_inputs);
-			free(path);
+			perror("Error");
+			printf("$ ");
+			fflush(stdout);
 			continue;
 		}
 		pid = fork();
 		if (pid == 0)
 		{
-			while (command_inputs[index] != NULL)
-			{
-				argv[index] = command_inputs[index];
-				index++;
-			}
-			argv[index] = NULL;
-
-			if (execve(argv[0], argv, NULL) == -1)
-            		{
-                		perror("Error");
-				free(command_inputs);
-				free(path);
-               			 exit(1);
-            		}
+			printf("testing");
+			exec_child_command(line, full_path);
+			return (0);
 		}
 		else
 		{
 			waitpid(pid, &w_status, WUNTRACED | WCONTINUED);
-			free(command_inputs);
-			free(path);
 			printf("$ ");
-                        fflush(stdout);
+			fflush(stdout);
 		}
 	}
 	return (0);

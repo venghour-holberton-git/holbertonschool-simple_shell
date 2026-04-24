@@ -14,7 +14,7 @@ char **string_to_array(char *s)
 	{
 		token = strtok(str, " ");
 		if (token == NULL)
-			break;
+		break;
 		word_array[word_count] = token;
 	}
 	word_array[word_count] = NULL;
@@ -32,106 +32,30 @@ extern char **environ;
 
 char *_getenv(const char *name)
 {
-    int i, j;
-    int match;
+	int i, j;
+	int match;
 
-    if (name == NULL || *name == '\0')
-        return (NULL);
+	if (name == NULL || *name == '\0')
+		return (NULL);
 
-    for (i = 0; environ[i] != NULL; i++)
-    {
-        match = 1;
+	for (i = 0; environ[i] != NULL; i++)
+	{
+		match = 1;
 
-        for (j = 0; name[j] != '\0'; j++)
-        {
-            if (environ[i][j] != name[j])
-            {
-                match = 0;
-                break;
-            }
-        }
+		for (j = 0; name[j] != '\0'; j++)
+		{
+			if (environ[i][j] != name[j])
+		{
+		match = 0;
+		break;
+		}
+		}
 
-        if (match && environ[i][j] == '=')
-            return (&environ[i][j + 1]);
-    }
+	if (match && environ[i][j] == '=')
+		return (&environ[i][j + 1]);
+	}
 
-    return (NULL);
-}
-void print_path_directories(void)
-{
-    int i;
-    char *path;
-    char *token;
-
-    for (i = 0; environ[i] != NULL; i++)
-    {
-        if (strncmp(environ[i], "PATH=", 5) == 0)
-        {
-            path = environ[i] + 5;
-
-            token = strtok(path, ":");
-
-            while (token != NULL)
-            {
-                printf("%s\n", token);
-                token = strtok(NULL, ":");
-            }
-            return;
-        }
-    }
-}
-list_t *build_path_list(void)
-{
-    int i;
-    char *path;
-    char *token;
-    list_t *head = NULL;
-    list_t *new_node;
-    list_t *tmp;
-
-    for (i = 0; environ[i] != NULL; i++)
-    {
-        if (strncmp(environ[i], "PATH=", 5) == 0)
-        {
-            path = strdup(environ[i] + 5);
-            if (path == NULL)
-                return (NULL);
-
-            token = strtok(path, ":");
-
-            while (token != NULL)
-            {
-                new_node = malloc(sizeof(list_t));
-                if (new_node == NULL)
-                {
-                    free(path);
-                    return (NULL);
-                }
-
-                new_node->dir = strdup(token);
-                new_node->next = NULL;
-
-                if (head == NULL)
-                {
-                    head = new_node;
-                }
-                else
-                {
-                    tmp = head;
-                    while (tmp->next != NULL)
-                        tmp = tmp->next;
-                    tmp->next = new_node;
-                }
-
-                token = strtok(NULL, ":");
-            }
-
-            free(path);
-            return (head);
-        }
-    }
-
-    return (NULL);
+	return (NULL);
 }
 
 /**
@@ -160,6 +84,7 @@ list_t *build_path_list(void)
 
 
 */
+
 /**
  * print_env - prints the environment variables
  * Return: void
@@ -175,13 +100,17 @@ void print_env(void)
 }
 char *search_for_path(char *short_path, int *is_founded)
 {
-	char *full_path = NULL;
-	int index = 0;
+	char *full_path;
 	char *dir;
 	char *path = strdup(_getenv("PATH"));
 
+	*is_founded = 0;
 	full_path = malloc(1024);
 	dir = strtok(path, ":");
+	if (path == NULL)
+	{
+		return (full_path);
+	}
 	while(dir != NULL)
 	{
 		sprintf(full_path, "%s/%s", dir, short_path);
@@ -190,36 +119,60 @@ char *search_for_path(char *short_path, int *is_founded)
 			*is_founded = 1;
 			return (full_path);
 		}
-		index++;
+		dir = strtok(NULL, ":");
 	}
 	return (full_path);
 }
 char *get_available_path(char *user_command, int *is_founded)
 {
-	char *first_input;
 	char **command_array;
+	char *first_input;
 
 	*is_founded = 0;
 	user_command[strcspn(user_command, "\n")] = '\0';
 	command_array = string_to_array(user_command);
 	first_input = strdup(command_array[0]);
-	free(command_array);
 	if (strchr(first_input, '/') != NULL)
-        {
+	{
 		if (access(first_input, X_OK) == 0)
-                {
-                        *is_founded = 1;
+		{
+			*is_founded = 1;
 			return (first_input);
-                }
+		}
 	}
-        else
-        {
-		return (search_for_path(first_input, is_founded));
-        }
+	return (search_for_path(first_input, is_founded));
 }
-/**
-int exec_command(char **command_input, char *path)
+char ** get_argv_from_command(char *user_command, char *file_path)
 {
-	char *directory;
+	int index = 0;
+	char **argv;
+	char **command_inputs;
+
+	argv = malloc(sizeof(char *) * 100);
+	command_inputs = string_to_array(user_command);
+	while (command_inputs[index] != NULL)
+	{
+		if (index == 0)
+		{
+			argv[index] = file_path;
+		}
+		else
+		{
+			argv[index] = command_inputs[index];
+		}
+		index++;
+	}
+	argv[index] = NULL;
+	return (argv);
 }
-*/
+int exec_child_command(char *user_command, char *file_path)
+{
+	int index = 0;
+	char **argv;
+	argv = get_argv_from_command(user_command, file_path);
+	if (execve(argv[0], argv, NULL) == -1)
+	{
+		perror("Error");
+		return (1);
+	}
+}
