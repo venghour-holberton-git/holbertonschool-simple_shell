@@ -75,8 +75,7 @@ simple_shell$ env
 
 ## 🐞 Bugs
 
-If you find any bugs, please report them via the project repository or email:
-13071@holbertonstudents.com
+If you find any bugs, please report them via the project repository or email: 13071@holbertonstudents.com
 
 ---
 
