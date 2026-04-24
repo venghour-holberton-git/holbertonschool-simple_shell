@@ -12,16 +12,16 @@
  */
 int user_exit(char **args, char *line)
 {
-        if (args && args[0] != NULL)
-        {
-                if (_strcmp(args[0], "exit") == 0)
-                {
-                        free_tokens(args);
-                        free(line);
-                        exit(EXIT_SUCCESS);
-                }
-        }
-        return (0);
+	if (args && args[0] != NULL)
+	{
+		if (_strcmp(args[0], "exit") == 0)
+		{
+ 			free_tokens(args);
+			free(line);
+			exit(EXIT_SUCCESS);
+		}
+	}
+	return (0);
 }
 
 /**
