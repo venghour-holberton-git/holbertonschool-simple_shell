@@ -1,1 +1,45 @@
+MAN_1_SIMPLE_SHELL(1)                User Commands               MAN_1_SIMPLE_SHELL(1)
 
+NAME
+       simple_shell - Holberton School project shell
+
+SYNOPSIS
+       simple_shell
+
+DESCRIPTION
+       simple_shell is a basic Unix shell developed as a project for Holberton
+       School. It provides a command-line interface for users to interact with
+       the operating system.
+
+OPTIONS
+       None.
+
+COMMANDS
+       The shell supports various standard shell commands including:
+
+       - ls: List directory contents.
+       - env: Print current enviroment.
+       - exit: Exit the shell.
+
+LIMITATIONS
+      If a command is used that was not posted in the project requiremeents (e.g. echo) then and Error will show
+
+AUTHORS
+       simple_shell was developed by Venghour Heng, Lachlan Luchetti, and Anthony Joy as a Holberton
+       School project.
+
+BUGS
+       Report any bugs or issues with the project repository on GitHub to 13071@holbertonstudents.com
+
+SEE ALSO
+       For additional information, refer to the project documentation and code
+       repository.
+
+EXAMPLES
+       $ simple_shell
+       simple_shell$ ls
+       file1 file2 file3
+       simple_shell$ env
+      
+
+                                2026
