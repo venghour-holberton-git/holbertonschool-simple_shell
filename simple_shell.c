@@ -2,30 +2,27 @@
 #include <stddef.h>
 
 /**
- * user_exit - Checks if a command is "exit" and handles termination.
- * @args: Array of tokens (the command and its arguments).
- * @line: The raw input buffer from getline to be freed.
- * Return: 0 if the command is not exit, otherwise it exits the shell.
+ * user_exit - checks if command is "exit" and handles termination
+ * @args: array of parsed command arguments
+ * @line: raw input line from getline
+ *
+ * Description: Frees allocated memory and exits shell if command is "exit"
+ *
+ * Return: 0 if command is not "exit"
  */
-
-/**
- * int user_exit(char **args, char *line)
+int user_exit(char **args, char *line)
 {
-	if (args && args[0] != NULL)
-	{
-		if (_strcmp(args[0], "exit") == 0)
-		{
-			free_tokens(args);
-			free(line);
-
-			exit(EXIT_SUCCESS);
-		}
-	}
-
-	return (0);
+        if (args && args[0] != NULL)
+        {
+                if (_strcmp(args[0], "exit") == 0)
+                {
+                        free_tokens(args);
+                        free(line);
+                        exit(EXIT_SUCCESS);
+                }
+        }
+        return (0);
 }
-
-*/
 
 /**
  * print_env - prints the current environment variables
