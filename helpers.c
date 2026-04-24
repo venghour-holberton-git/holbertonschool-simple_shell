@@ -38,8 +38,6 @@ char **string_to_array(char *s)
  * Return: pointer to value if found, NULL otherwise
  */
 
-extern char **environ;
-
 char *_getenv(const char *name)
 {
 	int i, j;

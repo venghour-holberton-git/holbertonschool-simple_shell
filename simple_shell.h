@@ -11,7 +11,6 @@
 /* Acess to system environment variables */
 extern char **environ;
 
-
 /**
  * struct list_s - singly linked list
  * @dir: directory string
