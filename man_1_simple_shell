@@ -1,45 +1,61 @@
-MAN_1_SIMPLE_SHELL(1)                User Commands               MAN_1_SIMPLE_SHELL(1)
+SIMPLE_SHELL(1)                 User Commands                SIMPLE_SHELL(1)
 
 NAME
-       simple_shell - Holberton School project shell
+       simple_shell - a minimal Unix command interpreter
 
 SYNOPSIS
        simple_shell
 
 DESCRIPTION
-       simple_shell is a basic Unix shell developed as a project for Holberton
-       School. It provides a command-line interface for users to interact with
-       the operating system.
-
-OPTIONS
-       None.
+       simple_shell is a simple Unix command-line interpreter developed as part
+       of the Holberton School curriculum. It provides a basic interface for
+       users to execute commands and interact with the operating system.
 
 COMMANDS
-       The shell supports various standard shell commands including:
+       The shell supports execution of external commands available in the PATH,
+       as well as a limited set of built-in commands:
 
-       - ls: List directory contents.
-       - env: Print current enviroment.
-       - exit: Exit the shell.
+       exit
+              Exit the shell.
+
+       env
+              Print the current environment variables.
+
+       ls
+              List directory contents (via external command).
+
+OPTIONS
+       simple_shell does not accept any command-line options.
 
 LIMITATIONS
-      If a command is used that was not posted in the project requiremeents (e.g. echo) then and Error will show
+       This shell is a minimal implementation and does not support advanced
+       features such as:
+              - Command chaining
+              - Pipes
+              - Redirection
+              - Wildcards
+              - Full built-in command set
+
+       Attempting to run unsupported commands or invalid syntax may result in
+       an error.
+
+EXAMPLES
+              $ simple_shell
+              simple_shell$ ls
+              file1 file2 file3
 
 AUTHORS
-       simple_shell was developed by Venghour Heng, Lachlan Luchetti, and Anthony Joy as a Holberton
-       School project.
+       Developed by:
+              Venghour Heng
+              Lachlan Luchetti
+              Anthony Joy
 
 BUGS
-       Report any bugs or issues with the project repository on GitHub to 13071@holbertonstudents.com
+       Report bugs via the project repository or contact:
+              13071@holbertonstudents.com
 
 SEE ALSO
        For additional information, refer to the project documentation and code
        repository.
 
-EXAMPLES
-       $ simple_shell
-       simple_shell$ ls
-       file1 file2 file3
-       simple_shell$ env
-      
-
-                                2026
+                                April 2026
