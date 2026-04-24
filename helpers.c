@@ -53,10 +53,10 @@ char *_getenv(const char *name)
 		for (j = 0; name[j] != '\0'; j++)
 		{
 			if (environ[i][j] != name[j])
-		{
-		match = 0;
-		break;
-		}
+			{
+				match = 0;
+				break;
+			}
 		}
 
 	if (match && environ[i][j] == '=')

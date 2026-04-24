@@ -19,8 +19,8 @@ extern char **environ;
 
 typedef struct list_s
 {
-    char *dir;
-    struct list_s *next;
+	char *dir;
+	struct list_s *next;
 } list_t;
 
 /* Prototype for task 6 */

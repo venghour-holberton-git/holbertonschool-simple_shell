@@ -68,7 +68,7 @@ char *search_for_path(char *short_path, int *is_founded)
 	{
 		return (full_path);
 	}
-	while(dir != NULL)
+	while (dir != NULL)
 	{
 		sprintf(full_path, "%s/%s", dir, short_path);
 		if (access(full_path, X_OK) == 0)
