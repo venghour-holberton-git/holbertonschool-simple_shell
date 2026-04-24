@@ -93,3 +93,6 @@ If you find any bugs, please report them via the project repository or email:
 * `man sh`
 * `man execve`
 * `man fork`
+* `https://en.wikipedia.org/wiki/Unix_shell`
+* `https://en.wikipedia.org/wiki/Thompson_shell`
+* `https://en.wikipedia.org/wiki/Ken_Thompson`
