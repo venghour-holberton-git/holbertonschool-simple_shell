@@ -15,20 +15,20 @@ char **string_to_array(char *s)
 {
 	int word_count = 0;
 	char **word_array;
-	char *str, *token;
+	char *str, *copy, *token;
 
 	if (s == NULL)
 		return (NULL);
 	word_array = malloc(sizeof(char *) * 1024);
-	for (word_count = 0, str = strdup(s); ; str = NULL, word_count++)
+	for (word_count = 0, str = strdup(s), copy = str; ; str = NULL, word_count++)
 	{
 		token = strtok(str, " ");
 		if (token == NULL)
 		break;
 		word_array[word_count] = strdup(token);
 	}
+	free(copy);
 	word_array[word_count] = NULL;
-	free(str);
 	return (word_array);
 }
 
