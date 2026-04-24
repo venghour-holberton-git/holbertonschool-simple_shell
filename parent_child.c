@@ -14,7 +14,6 @@
 
 int exec_child_command(char *user_command, char *file_path)
 {
-	int index = 0;
 	char **argv;
 
 	argv = get_argv_from_command(user_command, file_path);
@@ -23,6 +22,7 @@ int exec_child_command(char *user_command, char *file_path)
 		perror("Error");
 		return (1);
 	}
+	return (1);
 }
 
 /**

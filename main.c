@@ -10,7 +10,6 @@ int main(void)
 	char *line = NULL;
 	size_t size = 0;
 	ssize_t nread;
-	char *argv[100];
 	int found = 0;
 	char *full_path = NULL;
 
