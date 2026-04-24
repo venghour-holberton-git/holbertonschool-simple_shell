@@ -175,13 +175,17 @@ void print_env(void)
 }
 char *search_for_path(char *short_path, int *is_founded)
 {
-	char *full_path = NULL;
-	int index = 0;
+	char *full_path;
 	char *dir;
 	char *path = strdup(_getenv("PATH"));
 
+	*is_founded = 0;
 	full_path = malloc(1024);
 	dir = strtok(path, ":");
+	if (path == NULL)
+	{
+		return (full_path);
+	}
 	while(dir != NULL)
 	{
 		sprintf(full_path, "%s/%s", dir, short_path);
@@ -190,36 +194,37 @@ char *search_for_path(char *short_path, int *is_founded)
 			*is_founded = 1;
 			return (full_path);
 		}
-		index++;
+		dir = strtok(NULL, ":");
 	}
 	return (full_path);
 }
 char *get_available_path(char *user_command, int *is_founded)
 {
-	char *first_input;
 	char **command_array;
+	char *first_input;
 
 	*is_founded = 0;
 	user_command[strcspn(user_command, "\n")] = '\0';
 	command_array = string_to_array(user_command);
 	first_input = strdup(command_array[0]);
 	free(command_array);
-	if (strchr(first_input, '/') != NULL)
+	if (first_input[strcspn(first_input, "/")])
         {
-		if (access(first_input, X_OK) == 0)
+		if ((first_input, X_OK) == 0)
                 {
                         *is_founded = 1;
 			return (first_input);
                 }
 	}
-        else
-        {
-		return (search_for_path(first_input, is_founded));
-        }
+	return (search_for_path(first_input, is_founded));
+}
+void set_command(char ***command_inputs, char **argv)
+{
 }
 int exec_child_command(char ***command_inputs, char **argv)
 {
 	int index = 0;
+	printf("let's test\n");
 	while (*command_inputs[index] != NULL)
         {
 		argv[index] = *command_inputs[index];

@@ -9,19 +9,16 @@ int main(void)
 	int w_status, index = 0;
 	char **command_inputs;
 	char *argv[100];
-	char *full_path;
-	int found;
+	int found = 0;
 	int interactive = isatty(STDIN_FILENO);
+	char *full_path = NULL;
 
 	printf("$ ");
 	while ((nread = getline(&line, &size, stdin)) != -1)
 	{
-		char *path = strdup(_getenv("PATH"));
-		char *dir;
 
 		index = 0;
 		found = 0;
-		
 		if (interactive)
 		{
 			if (strcmp(line, "env\n") == 0)
@@ -31,30 +28,18 @@ int main(void)
 				continue;
 			}
 		}
-		line[strcspn(line, "\n")] = '\0';
-		command_inputs = string_to_array(line);
-		dir = strtok(path, ":");
-
-		if (strcmp(command_inputs[0], "exit") == 0)
-		{
-    	/* Clean up: free allocated memory for arguments and input buffer /
-    	free_args(args); 
-    	free(input_line);
-
-    	/ Terminate the program with status 0 (success) */
-    	exit(EXIT_SUCCESS);
-		}
-
+		printf("starteddddd\n");	
 		full_path = get_available_path(line, &found);
+		printf("founded is %d\n", found);
 		if (found == 0)
 		{
 			free(command_inputs);
-			free(path);
 			continue;
 		}
 		pid = fork();
 		if (pid == 0)
 		{
+			printf("testing");
 			exec_child_command(&command_inputs, argv);
 			return (0);
 		}
@@ -62,7 +47,6 @@ int main(void)
 		{
 			waitpid(pid, &w_status, WUNTRACED | WCONTINUED);
 			free(command_inputs);
-			free(path);
 			printf("$ ");
                         fflush(stdout);
 		}
