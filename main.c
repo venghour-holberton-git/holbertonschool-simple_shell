@@ -12,22 +12,14 @@ int main(void)
 	ssize_t nread;
 	char *argv[100];
 	int found = 0;
-	int interactive = isatty(STDIN_FILENO);
 	char *full_path = NULL;
 
 	printf("$ ");
 	while ((nread = getline(&line, &size, stdin)) != -1)
 	{
 		found = 0;
-		if (interactive)
-		{
-			if (strcmp(line, "env\n") == 0)
-			{
-				print_env();
-				printf("$ ");
-				continue;
-			}
-		}
+		if (handle_print_env_and_exit() == 0)
+			continue;
 		full_path = get_available_path(line, &found);
 		if (found == 0)
 		{

@@ -274,3 +274,31 @@ void handle_parent_child_action(char *line, char *full_path)
 		fflush(stdout);
 	}
 }
+
+/**
+ * handle_print_env_and_exit - handles "env" command in interactive mode
+ *
+ * Description: This function checks if the shell is running in
+ * interactive mode. If so, it compares the user input with the
+ * "env" command. When matched, it prints the environment variables
+ * and displays a new prompt.
+ *
+ * Return: 0 if the "env" command is handled successfully,
+ * -1 otherwise
+ */
+
+int handle_print_env_and_exit()
+{
+	int interactive = isatty(STDIN_FILENO);
+
+	if (interactive)
+	{
+		if (strcmp(line, "env\n") == 0)
+		{
+			print_env();
+			printf("$ ");
+			return (0);
+		}
+	}
+	return (-1);
+}
