@@ -28,7 +28,11 @@
 */
 
 /**
- * print_env - prints the environment variables
+ * print_env - prints the current environment variables
+ *
+ * Description: This function iterates through the global environment
+ * variable list and prints each entry on a new line.
+ *
  * Return: void
  */
 void print_env(void)
