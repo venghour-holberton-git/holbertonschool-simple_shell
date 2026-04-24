@@ -79,6 +79,7 @@ char *search_for_path(char *short_path, int *is_founded)
 		}
 		dir = strtok(NULL, ":");
 	}
+	free(path);
 	return (full_path);
 }
 
@@ -99,7 +100,7 @@ char *search_for_path(char *short_path, int *is_founded)
 char *get_available_path(char *user_command, int *is_founded)
 {
 	char **command_array;
-	char *first_input;
+	char **first_input;
 
 	*is_founded = 0;
 	user_command[strcspn(user_command, "\n")] = '\0';

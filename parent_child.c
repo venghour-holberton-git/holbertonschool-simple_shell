@@ -15,10 +15,18 @@
 int exec_child_command(char *user_command, char *file_path)
 {
 	char **argv;
-
+	int i = 0;
+	
+	command_inputs = string_to_array(user_command);
 	argv = get_argv_from_command(user_command, file_path);
 	if (execve(argv[0], argv, NULL) == -1)
 	{
+		while (command_inputs[i] != NULL)
+		{
+			free(command_inputs[i]);
+		}
+		free(command_inputs);
+		free(argv);
 		perror("Error");
 		return (1);
 	}

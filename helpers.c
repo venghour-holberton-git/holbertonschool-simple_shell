@@ -25,9 +25,10 @@ char **string_to_array(char *s)
 		token = strtok(str, " ");
 		if (token == NULL)
 		break;
-		word_array[word_count] = token;
+		word_array[word_count] = strdup(token);
 	}
 	word_array[word_count] = NULL;
+	free(str);
 	return (word_array);
 }
 
