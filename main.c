@@ -32,16 +32,18 @@ int main(void)
 			}
 		}
 		full_path = get_available_path(line, &found);
-		printf("founded is %d\n", found);
 		if (found == 0)
 		{
+			perror("Error");
+			printf("$ ");
+			fflush(stdout);
 			continue;
 		}
 		pid = fork();
 		if (pid == 0)
 		{
 			printf("testing");
-			exec_child_command(line);
+			exec_child_command(line, full_path);
 			return (0);
 		}
 		else

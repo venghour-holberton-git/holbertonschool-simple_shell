@@ -32,7 +32,7 @@ char *_getenv(const char *name);
 int user_exit(char **args, char *line);
 char *search_for_path(char *short_path, int *is_founded);
 char *get_available_path(char *user_command, int *is_founded);
-int exec_child_command(char *user_command);
-char ** get_argv_from_command(char *user_command);
+int exec_child_command(char *user_command, char *file_path);
+char ** get_argv_from_command(char *user_command, char *file_path);
 
 #endif

@@ -132,9 +132,9 @@ char *get_available_path(char *user_command, int *is_founded)
 	user_command[strcspn(user_command, "\n")] = '\0';
 	command_array = string_to_array(user_command);
 	first_input = strdup(command_array[0]);
-	if (first_input[strcspn(first_input, "/")])
+	if (strchr(first_input, '/') != NULL)
 	{
-		if ((first_input, X_OK) == 0)
+		if (access(first_input, X_OK) == 0)
 		{
 			*is_founded = 1;
 			return (first_input);
@@ -142,7 +142,7 @@ char *get_available_path(char *user_command, int *is_founded)
 	}
 	return (search_for_path(first_input, is_founded));
 }
-char ** get_argv_from_command(char *user_command)
+char ** get_argv_from_command(char *user_command, char *file_path)
 {
 	int index = 0;
 	char **argv;
@@ -152,18 +152,24 @@ char ** get_argv_from_command(char *user_command)
 	command_inputs = string_to_array(user_command);
 	while (command_inputs[index] != NULL)
 	{
-		argv[index] = command_inputs[index];
+		if (index == 0)
+		{
+			argv[index] = file_path;
+		}
+		else
+		{
+			argv[index] = command_inputs[index];
+		}
 		index++;
 	}
 	argv[index] = NULL;
 	return (argv);
 }
-int exec_child_command(char *user_command)
+int exec_child_command(char *user_command, char *file_path)
 {
 	int index = 0;
 	char **argv;
-	printf("let's test\n");
-	argv = get_argv_from_command(user_command);
+	argv = get_argv_from_command(user_command, file_path);
 	if (execve(argv[0], argv, NULL) == -1)
 	{
 		perror("Error");
