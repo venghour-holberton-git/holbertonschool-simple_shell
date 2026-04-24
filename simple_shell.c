@@ -176,7 +176,7 @@ int exec_child_command(char *user_command, char *file_path)
 		return (1);
 	}
 }
-void handle_parent_child(char *line, char *full_path)
+void handle_parent_child_action(char *line, char *full_path)
 {
 	int w_status;
 	pid_t pid;
@@ -185,7 +185,7 @@ void handle_parent_child(char *line, char *full_path)
 	if (pid == 0)
 	{
 		exec_child_command(line, full_path);
-		return (0);
+		return;
 	}
 	else
 	{
