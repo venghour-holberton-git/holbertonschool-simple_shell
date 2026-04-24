@@ -51,8 +51,6 @@ void handle_parent_child_action(char *line, char *full_path)
 	else
 	{
 		waitpid(pid, &w_status, WUNTRACED | WCONTINUED);
-		printf("$ ");
-		fflush(stdout);
 	}
 }
 
@@ -77,7 +75,6 @@ int handle_print_env_and_exit(char *line)
 		if (strcmp(line, "env\n") == 0)
 		{
 			print_env();
-			printf("$ ");
 			return (0);
 		}
 	}

@@ -17,7 +17,7 @@ int main(void)
 	{
 		printf("$ ");
 		nread = getline(&line, &size, stdin);
-		if (nread == -1);
+		if (nread == -1)
 			break;
 		found = 0;
 		if (handle_print_env_and_exit(line) == 0)
@@ -26,8 +26,6 @@ int main(void)
 		if (found == 0)
 		{
 			perror("Error");
-			printf("$ ");
-			fflush(stdout);
 			continue;
 		}
 		handle_parent_child_action(line, full_path);
