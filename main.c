@@ -27,9 +27,11 @@ int main(void)
 		if (found == 0)
 		{
 			perror("Error");
+			free(full_path);
 			continue;
 		}
 		handle_parent_child_action(line, full_path);
+		free(full_path);
 	}
 	return (0);
 }
