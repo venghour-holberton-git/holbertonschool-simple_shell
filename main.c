@@ -33,5 +33,6 @@ int main(void)
 		handle_parent_child_action(line, full_path);
 		free(full_path);
 	}
+	free(line);
 	return (0);
 }
