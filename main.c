@@ -21,7 +21,13 @@ int main(int argc, char **argv)
 		nread = getline(&line, &size, stdin);
 		if (nread == -1)
 			break;
-
+		if (strcmp(args[0], "exit") == 0)
+		{
+    	free_args(args); 
+    	free(input_line);
+    	exit(EXIT_SUCCESS);
+		}
+		
 		found = 0;
 		if (handle_print_env_and_exit(line) == 0)
 			continue;
