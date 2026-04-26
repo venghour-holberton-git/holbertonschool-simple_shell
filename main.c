@@ -12,6 +12,7 @@ int main(void)
 	ssize_t nread;
 	int found = 0;
 	char *full_path = NULL;
+	char **args = parse_line(line);
 
 	while (1)
 	{
@@ -20,6 +21,7 @@ int main(void)
 		nread = getline(&line, &size, stdin);
 		if (nread == -1)
 			break;
+		user_exit(args, line);
 		if (handle_print_env(line) == 0)
 			continue;
 		found = 0;
