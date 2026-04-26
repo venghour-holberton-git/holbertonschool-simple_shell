@@ -21,16 +21,7 @@ int main(int argc, char **argv)
 		nread = getline(&line, &size, stdin);
 		if (nread == -1)
 			break;
-		argv = tokenize(line); 
 
-    /* 3. Check for built-ins BEFORE execution */
-    	if (argv != NULL && argv[0] != NULL)
-    	{
-        	if (strcmp(argv[0], "exit") == 0)
-        	{
-           	 exit(0);
-        	}
-    	}
 		found = 0;
 		if (handle_print_env_and_exit(line) == 0)
 			continue;
