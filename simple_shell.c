@@ -11,18 +11,16 @@
  * Return: 0 if command is not "exit"
  */
 
-int user_exit(char **args, char *line)
+int user_exit(char **args, char *line, int last_status)
 {
-    int exit_status = 0;
+    int exit_status = last_status;
     int i;
 
     if (args[0] != NULL && strcmp(args[0], "exit") == 0)
     {
-        /* If exit has a status argument, use it */
         if (args[1] != NULL)
-            exit_status = atoi(args[1]);
+            exit_status = atoi(args[1]); 
 
-        /* Free each string in args */
         for (i = 0; args[i] != NULL; i++)
             free(args[i]);
         free(args);
