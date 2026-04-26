@@ -10,18 +10,15 @@
  *
  * Return: 0 if command is not "exit"
  */
-void user_exit(char **args, char *line)
+int user_exit(char **args, char *line)
 {
-    if (args == NULL)
-    {
-        free(line);
-        exit(0);
-    }
-
-    free(line);
-    free(args); 
-
-    exit(0);
+		if ( args[0] != NULL && strcmp(args[0], "exit") == 0)
+		{
+			free(args);
+			free(line);
+			exit(EXIT_SUCCESS);
+		}
+	return (0);
 }
 
 /**
