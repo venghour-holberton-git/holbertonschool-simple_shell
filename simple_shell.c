@@ -5,7 +5,7 @@
  * user_exit - checks if command is "exit" and handles termination
  * @args: array of parsed command arguments
  * @line: raw input line from getline
- *
+ * @last_status: tracks last command exit status
  * Description: Frees allocated memory and exits shell if command is "exit"
  *
  * Return: 0 if command is not "exit"
