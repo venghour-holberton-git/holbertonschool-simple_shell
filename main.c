@@ -19,6 +19,7 @@ int main(int argc, char **args)
     int found = 0;
     char *full_path = NULL;
     char **parsed_args = NULL;
+    int last_status = 0;
     (void)argc;
     (void)args;
 
@@ -45,7 +46,7 @@ int main(int argc, char **args)
 
         if (strcmp(parsed_args[0], "exit") == 0)
         {
-            user_exit(parsed_args, line);
+            user_exit(parsed_args, line, last_status);
         }
         if (strcmp(parsed_args[0], "env") == 0)
         {
@@ -62,11 +63,12 @@ int main(int argc, char **args)
         {
             fprintf(stderr, "./hsh: 1: %s: not found\n", line);
             free(full_path);
+            last_staus = 127;
             continue;
         }
-        handle_parent_child_action(line, full_path);
+        last_status = handle_parent_child_action(line, full_path);
         free(full_path);
     }
     free(line);
-    return (0);
+    return (last_status);
 }
