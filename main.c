@@ -15,14 +15,14 @@ int main(void)
 
 	while (1)
 	{
+		if (handle_print_env_and_exit(line) == 0)
+			continue;
 		if (isatty(STDIN_FILENO))
 			printf("$ ");
 		nread = getline(&line, &size, stdin);
 		if (nread == -1)
 			break;
 		found = 0;
-		if (handle_print_env_and_exit(line) == 0)
-			continue;
 		full_path = get_available_path(line, &found);
 		if (found == 0)
 		{
