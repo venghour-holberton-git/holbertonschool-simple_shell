@@ -38,15 +38,11 @@ int main(void)
 
         if (strcmp(parsed_args[0], "exit") == 0)
         {
-            int exit_status = last_status;
-            if (parsed_args[1] != NULL)
-                exit_status = atoi(parsed_args[1]);
-
-            for (i = 0; parsed_args[i] != NULL; i++)
-                free(parsed_args[i]);
-            free(parsed_args);
-            free(line);
-            exit(exit_status);
+        for (i = 0; parsed_args[i] != NULL; i++)
+            free(parsed_args[i]);
+        free(parsed_args);
+        free(line);
+        exit(last_status);
         }
 
         if (strcmp(parsed_args[0], "env") == 0)
