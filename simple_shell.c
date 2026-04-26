@@ -12,15 +12,12 @@
  */
 int user_exit(char **args, char *line)
 {
-	if (args && args[0] != NULL)
-	{
-		if (strcmp(args[0], "exit") == 0)
+		if ( args[0] != NULL && strcmp(args[0], "exit") == 0)
 		{
 			free(args);
 			free(line);
 			exit(EXIT_SUCCESS);
 		}
-	}
 	return (0);
 }
 
