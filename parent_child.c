@@ -102,12 +102,15 @@ char **parse_line(char *line)
     char **args = malloc(sizeof(char *) * 64);
     char *token;
     int i = 0;
+	
+if (line == NULL || *line == '\n' || *line == '\0')
+    return (NULL);
 
-    token = strtok(line, " ");
+    token = strtok_r(line, " \t\n", &saveptr);
     while (token != NULL)
     {
         args[i++] = token;
-        token = strtok(NULL, " ");
+		token = strtok_r(NULL, " \t\n", &saveptr);
     }
     args[i] = NULL;
 
