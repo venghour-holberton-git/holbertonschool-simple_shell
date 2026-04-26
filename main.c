@@ -20,6 +20,12 @@ int main(void)
 		nread = getline(&line, &size, stdin);
 		if (nread == -1)
 			break;
+		if ( args[0] != NULL && strcmp(args[0], "exit") == 0)
+		{
+			free(args);
+			free(line);
+			exit(EXIT_SUCCESS);
+		}
 		found = 0;
 		if (handle_print_env_and_exit(line) == 0)
 			continue;
