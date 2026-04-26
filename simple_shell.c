@@ -2,35 +2,6 @@
 #include <stddef.h>
 
 /**
- * user_exit - checks if command is "exit" and handles termination
- * @args: array of parsed command arguments
- * @line: raw input line from getline
- * @last_status: tracks last command exit status
- * Description: Frees allocated memory and exits shell if command is "exit"
- *
- * Return: 0 if command is not "exit"
- */
-
-int user_exit(char **args, char *line, int last_status)
-{
-    int exit_status = last_status;
-    int i;
-
-    if (args[0] != NULL && strcmp(args[0], "exit") == 0)
-    {
-        if (args[1] != NULL)
-            exit_status = atoi(args[1]); 
-
-        for (i = 0; args[i] != NULL; i++)
-            free(args[i]);
-        free(args);
-        free(line);
-        exit(exit_status);
-    }
-    return (0);
-}
-
-/**
  * print_env - prints the current environment variables
  *
  * Description: This function iterates through the global environment
