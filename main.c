@@ -12,6 +12,7 @@ int main(int argc, char **argv)
 	ssize_t nread;
 	int found = 0;
 	char *full_path = NULL;
+	(void)argc;
 
 	while (1)
 	{
@@ -20,9 +21,9 @@ int main(int argc, char **argv)
 		nread = getline(&line, &size, stdin);
 		if (nread == -1)
 			break;
-		if ( args[0] != NULL && strcmp(args[0], "exit") == 0)
+		if (argv[0] != NULL && strcmp(argv[0], "exit") == 0)
 		{
-			free(args);
+			free(argv);
 			free(line);
 			exit(EXIT_SUCCESS);
 		}
