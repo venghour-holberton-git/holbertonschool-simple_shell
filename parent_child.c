@@ -46,21 +46,25 @@ int exec_child_command(char *user_command, char *file_path)
  * Return: void
  */
 
-void handle_parent_child_action(char *line, char *full_path)
+int handle_parent_child_action(char *line, char *full_path)
 {
-	int w_status;
-	pid_t pid;
+    int w_status;
+    pid_t pid;
 
-	pid = fork();
-	if (pid == 0)
-	{
-		exec_child_command(line, full_path);
-		return;
-	}
-	else
-	{
-		waitpid(pid, &w_status, WUNTRACED | WCONTINUED);
-	}
+    pid = fork();
+    if (pid == 0)
+    {
+        exec_child_command(line, full_path);
+        return (0);
+    }
+    else
+    {
+        waitpid(pid, &w_status, WUNTRACED | WCONTINUED);
+    }
+
+    if (WIFEXITED(w_status))
+        return (WEXITSTATUS(w_status));
+    return (0);
 }
 
 /**
