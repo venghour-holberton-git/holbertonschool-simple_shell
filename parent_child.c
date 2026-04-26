@@ -75,7 +75,7 @@ void handle_parent_child_action(char *line, char *full_path)
  * -1 otherwise
  */
 
-int handle_print_env(char *line)
+int handle_print_env_and_exit(char *line)
 {
 	int interactive = isatty(STDIN_FILENO);
 
@@ -88,32 +88,4 @@ int handle_print_env(char *line)
 		}
 	}
 	return (-1);
-}
-
-/**
- * parse_line - splits input line into arguments
- * @line: user input
- *
- * Return: array of arguments
- */
-
-char **parse_line(char *line)
-{
-    char **args = malloc(sizeof(char *) * 64);
-    char *token;
-	char *saveptr; 
-    int i = 0;
-	
-	if (line == NULL || *line == '\n' || *line == '\0')
-    	return (NULL);
-
-    token = strtok_r(line, " \t\n", &saveptr);
-    while (token != NULL)
-    {
-        args[i++] = token;
-		token = strtok_r(NULL, " \t\n", &saveptr);
-    }
-    args[i] = NULL;
-
-    return args;
 }
