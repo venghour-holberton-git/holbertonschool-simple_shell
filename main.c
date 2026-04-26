@@ -22,6 +22,7 @@ int main(void)
 		if (nread == -1)
 		{
 			free(line);
+			exit(0);
 			break;
 		}
 		user_exit(args, line);
