@@ -28,7 +28,7 @@ void print_env(void);
 
 char **string_to_array(char *s);
 char *_getenv(const char *name);
-int user_exit(char **args, char *line);
+int user_exit(char **args, char *line, int last_status);
 char *search_for_path(char *short_path, int *is_founded);
 char *get_available_path(char *user_command, int *is_founded);
 int exec_child_command(char *user_command, char *file_path);
