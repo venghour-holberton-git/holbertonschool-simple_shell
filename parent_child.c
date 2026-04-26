@@ -101,10 +101,11 @@ char **parse_line(char *line)
 {
     char **args = malloc(sizeof(char *) * 64);
     char *token;
+	char *saveptr; 
     int i = 0;
 	
-if (line == NULL || *line == '\n' || *line == '\0')
-    return (NULL);
+	if (line == NULL || *line == '\n' || *line == '\0')
+    	return (NULL);
 
     token = strtok_r(line, " \t\n", &saveptr);
     while (token != NULL)
