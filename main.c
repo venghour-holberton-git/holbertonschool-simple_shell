@@ -4,14 +4,7 @@
  * main - entry point of the program
  * Return: 0
  */
-
-#include "simple_shell.h"
-
-/**
- * main - entry point of the program
- * Return: 0
- */
-int main(int argc, char **args)
+int main(void)
 {
     char *line = NULL;
     size_t size = 0;
@@ -20,8 +13,7 @@ int main(int argc, char **args)
     char *full_path = NULL;
     char **parsed_args = NULL;
     int last_status = 0;
-    (void)argc;
-    (void)args;
+    int i;
 
     while (1)
     {
@@ -46,15 +38,28 @@ int main(int argc, char **args)
 
         if (strcmp(parsed_args[0], "exit") == 0)
         {
-            user_exit(parsed_args, line, last_status);
+            int exit_status = last_status;
+            if (parsed_args[1] != NULL)
+                exit_status = atoi(parsed_args[1]);
+
+            for (i = 0; parsed_args[i] != NULL; i++)
+                free(parsed_args[i]);
+            free(parsed_args);
+            free(line);
+            exit(exit_status);
         }
+
         if (strcmp(parsed_args[0], "env") == 0)
         {
             print_env();
+            for (i = 0; parsed_args[i] != NULL; i++)
+                free(parsed_args[i]);
             free(parsed_args);
             continue;
         }
 
+        for (i = 0; parsed_args[i] != NULL; i++)
+            free(parsed_args[i]);
         free(parsed_args);
 
         found = 0;
@@ -66,6 +71,7 @@ int main(int argc, char **args)
             last_status = 127;
             continue;
         }
+
         last_status = handle_parent_child_action(line, full_path);
         free(full_path);
     }
