@@ -33,7 +33,7 @@ char *search_for_path(char *short_path, int *is_founded);
 char *get_available_path(char *user_command, int *is_founded);
 int exec_child_command(char *user_command, char *file_path);
 char **get_argv_from_command(char *user_command, char *file_path);
-void handle_parent_child_action(char *line, char *full_path);
+int handle_parent_child_action(char *line, char *full_path);
 int handle_print_env_and_exit(char *line);
 
 #endif
