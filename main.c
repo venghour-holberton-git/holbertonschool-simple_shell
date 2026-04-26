@@ -60,7 +60,7 @@ int main(void)
 
         found = 0;
         full_path = get_available_path(line, &found);
-        if (found == 0)
+        if (found == NULL)
         {
             fprintf(stderr, "./hsh: 1: %s: not found\n", line);
             free(full_path);
