@@ -35,34 +35,48 @@ void print_env(void)
 
 char *search_for_path(char *short_path, int *is_founded)
 {
-	char *full_path;
-	char *dir;
-	char *path = strdup(_getenv("PATH"));
+    char *full_path;
+    char *dir;
+    char *path_env;
+    char *path;
 
-	*is_founded = 0;
-	full_path = malloc(1024);
-	dir = strtok(path, ":");
-	if (dir == NULL)
-	{
-		free(short_path);
-		free(path);
-		return (full_path);
-	}
-	while (dir != NULL)
-	{
-		sprintf(full_path, "%s/%s", dir, short_path);
-		if (access(full_path, X_OK) == 0)
-		{
-			free(short_path);
-			free(path);
-			*is_founded = 1;
-			return (full_path);
-		}
-		dir = strtok(NULL, ":");
-	}
-	free(short_path);
-	free(path);
-	return (full_path);
+    *is_founded = 0;
+    path_env = _getenv("PATH");
+
+    if (path_env == NULL || path_env[0] == '\0')
+    {
+        free(short_path);
+        return (NULL);
+    }
+
+    path = strdup(path_env);
+    full_path = malloc(1024);
+    if (!full_path || !path)
+    {
+        free(short_path);
+        free(path);
+        free(full_path);
+        return (NULL);
+    }
+
+    dir = strtok(path, ":");
+    while (dir != NULL)
+    {
+        sprintf(full_path, "%s/%s", dir, short_path);
+        if (access(full_path, X_OK) == 0)
+        {
+            free(short_path);
+            free(path);
+            *is_founded = 1;
+            return (full_path);
+        }
+        dir = strtok(NULL, ":");
+    }
+
+    free(short_path);
+    free(path);
+    free(full_path);
+    return (NULL);
 }
 
 /**
@@ -81,30 +95,31 @@ char *search_for_path(char *short_path, int *is_founded)
 
 char *get_available_path(char *user_command, int *is_founded)
 {
-	char **command_array;
-	char *first_input;
-	int i;
+    char **command_array;
+    char *first_input;
+    int i;
 
-	*is_founded = 0;
-	user_command[strcspn(user_command, "\n")] = '\0';
-	command_array = string_to_array(user_command);
-	first_input = strdup(command_array[0]);
-	for (i = 0; ;i++)
-	{
-		if (command_array[i] == NULL)
-			break;
-		free(command_array[i]);
-	}
-	free(command_array);
-	if (strchr(first_input, '/') != NULL)
-	{
-		if (access(first_input, X_OK) == 0)
-		{
-			*is_founded = 1;
-			return (first_input);
-		}
-	}
-	return (search_for_path(first_input, is_founded));
+    *is_founded = 0;
+    user_command[strcspn(user_command, "\n")] = '\0';
+    command_array = string_to_array(user_command);
+    first_input = strdup(command_array[0]);
+
+    for (i = 0; command_array[i] != NULL; i++)
+        free(command_array[i]);
+    free(command_array);
+
+    if (strchr(first_input, '/') != NULL)
+    {
+        if (access(first_input, X_OK) == 0)
+        {
+            *is_founded = 1;
+            return (first_input);
+        }
+        free(first_input);
+        return (NULL);
+    }
+
+    return (search_for_path(first_input, is_founded));
 }
 
 /**
