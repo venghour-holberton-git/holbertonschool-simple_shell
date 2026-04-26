@@ -20,7 +20,10 @@ int main(void)
 			printf("$ ");
 		nread = getline(&line, &size, stdin);
 		if (nread == -1)
+		{
+			free(line);
 			break;
+		}
 		user_exit(args, line);
 		if (handle_print_env(line) == 0)
 			continue;
