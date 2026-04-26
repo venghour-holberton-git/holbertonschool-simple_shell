@@ -20,12 +20,9 @@ int main(void)
 			printf("$ ");
 		nread = getline(&line, &size, stdin);
 		if (nread == -1)
-		{
-			free(line);
-			exit(0);
 			break;
-		}
-		user_exit(args, line);
+		if (_strcmp(args[0], "exit") == 0)
+    		user_exit(args, line);
 		if (handle_print_env(line) == 0)
 			continue;
 		found = 0;
