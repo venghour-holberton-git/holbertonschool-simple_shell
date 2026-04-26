@@ -63,7 +63,7 @@ int main(int argc, char **args)
         {
             fprintf(stderr, "./hsh: 1: %s: not found\n", line);
             free(full_path);
-            last_staus = 127;
+            last_status = 127;
             continue;
         }
         last_status = handle_parent_child_action(line, full_path);
