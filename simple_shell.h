@@ -35,5 +35,7 @@ int exec_child_command(char *user_command, char *file_path);
 char **get_argv_from_command(char *user_command, char *file_path);
 void handle_parent_child_action(char *line, char *full_path);
 int handle_print_env(char *line);
+char **parse_line(char *line);
+int user_exit(char **args, char *line);
 
 #endif
