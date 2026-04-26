@@ -20,7 +20,7 @@ int main(void)
 		nread = getline(&line, &size, stdin);
 		if (nread == -1)
 			break;
-		if (handle_print_env_and_exit(line) == 0)
+		if (handle_print_env(line) == 0)
 			continue;
 		found = 0;
 		full_path = get_available_path(line, &found);
