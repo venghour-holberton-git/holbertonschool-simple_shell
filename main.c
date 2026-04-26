@@ -63,7 +63,7 @@ int main(void)
         if (found == 0)
         {
             fprintf(stderr, "./hsh: 1: %s: not found\n", line);
-            if(full_path != NULL)
+            if (full_path != NULL)
                 free(full_path);
             last_status = 127;
             continue;
