@@ -75,7 +75,7 @@ void handle_parent_child_action(char *line, char *full_path)
  * -1 otherwise
  */
 
-int handle_print_env_and_exit(char *line)
+int handle_print_env(char *line)
 {
 	int interactive = isatty(STDIN_FILENO);
 
